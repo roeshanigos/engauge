@@ -1,6 +1,18 @@
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 import json
 
+<<<<<<< HEAD
+import cognitive_face as CF
+import cv2
+import os
+
+
+key = '9f23d33e86a24404b089d5a02ed69090'
+CF.Key.set(key)
+
+#prints the key
+print(key)
+
 accountID = "e6dc5dac-de07-48a6-b157-91105accc78a"
 accAccessToken = ""
 
@@ -12,11 +24,40 @@ headers1 = {
 def extractstt(data): # data a string of the json dictionary
     print("Extractstt start")
 
+
     part = json.loads(data)
     print(data)
 
+results = []
+# need to convert video to frames
+# frame to .jpg format (if this isn't done already)
+# vidcap = cv2.VideoCapture('emotion.mp4')
+# path = '/Users/ishanigos/PycharmProjects/enguage/engauge/frames'
+# success,image = vidcap.read()
+# count = 0
+# while success:
+#   cv2.imwrite(os.path.join(path, "frame%d.jpg" % count), image)     # save frame as JPEG file
+#   success,image = vidcap.read()
+#   print('Read a new frame: ', success)
+#   count += 1
+
+
+# face.detect method can take image files of .jpg, .png, or .bmp
+
     print("Extractstt end")
     pass
+
+
+path, dirs, files = next(os.walk("frames"))
+file_count = len(files)
+print(file_count)
+
+for i in range(file_count):
+    if (i % 30 == 0):
+        result = CF.face.detect(('frames/frame%d.jpg' % i), attributes='emotion')
+        results.append(result)
+
+print(results)
 
 
 try:
@@ -37,6 +78,7 @@ except Exception as e:
 # step 2 video access token using part 1
 
 # CF.face.detect(<image_file>, attributes='emotion')
+
 
 # will return array of "face" objects with faceAttributes property that contains emotion property
 
